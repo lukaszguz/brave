@@ -72,11 +72,7 @@ public abstract class CorrelationFields {
 
   public abstract void set(String name, String value);
 
-  /**
-   * Retrieves a correlation key by name or returns null if not found.
-   *
-   * @throws IllegalArgumentException if the input name is not valid
-   */
+  /** Retrieves a correlation key by name or returns null if not found. */
   @Nullable public abstract String get(String name);
 
   /**

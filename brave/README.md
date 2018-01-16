@@ -814,7 +814,7 @@ try (Scope scope = tagger.withTagContext(withMethod)) {
   // However, as of v0.10, TagContext.getIterator() is hidden, so only census impls can read them!
 }
 // Repeating the same block has the exact same result as tag contexts are immutable.
-}</pre>
+```
 
 The OT-centric design has a few implications, notably shared mutable state:
 
