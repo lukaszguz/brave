@@ -61,8 +61,11 @@ public abstract class TraceContext extends SamplingFlags {
   }
 
   public static Builder newBuilder() {
-    return new AutoValue_TraceContext.Builder().traceIdHigh(0L).debug(false).shared(false)
-        .extra(Collections.emptyList());
+    return new AutoValue_TraceContext.Builder()
+        .traceIdHigh(0L)
+        .debug(false).shared(false)
+        .extra(Collections.emptyList())
+        .correlationFields(CorrelationFields.NOOP);
   }
 
   /** When non-zero, the trace containing this span uses 128-bit trace identifiers. */
@@ -98,10 +101,13 @@ public abstract class TraceContext extends SamplingFlags {
    * Returns a list of additional data propagated through this trace.
    *
    * <p>The contents are intentionally opaque, deferring to {@linkplain Propagation} to define. An
-   * example implementation could be storing a class containing a correlation value, which is
+   * example implementation could be storing a class containing propagation-format specific data,
    * extracted from incoming requests and injected as-is onto outgoing requests.
    */
   public abstract List<Object> extra();
+
+  /** Returns a potentially no-op handler for {@link CorrelationFields correlation fields}. */
+  public abstract CorrelationFields correlationFields();
 
   public abstract Builder toBuilder();
 
@@ -157,6 +163,8 @@ public abstract class TraceContext extends SamplingFlags {
 
     /** @see TraceContext#shared() */
     public abstract Builder shared(boolean shared);
+
+    public abstract Builder correlationFields(CorrelationFields correlationFields);
 
     /** @see TraceContext#extra() */
     public abstract Builder extra(List<Object> extra);
